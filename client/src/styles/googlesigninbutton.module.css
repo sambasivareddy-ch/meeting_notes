@@ -1,0 +1,35 @@
+@import url('../_globals.css');
+
+.signin-button {
+    outline: none;
+    padding: 10px;
+    border: solid 1px #fff;
+    background-color: var(--primary-color-1);
+    width: 250px;
+    height: 50px;
+    border-radius: 5pc;
+    cursor: pointer;
+}
+
+.signin-button .auth-url {
+    text-decoration: none;
+    color: var(--primary-color-5);
+    font-size: var(--regular-font-size);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-regular);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--regular-gap);
+}
+
+.signin-button:hover {
+    background-color: var(--primary-color-3);
+    border-color: var(--primary-color-3);
+    transform: scale(0.97);
+    transition: all 0.3s ease-in;
+}
+
+.signin-button:hover .auth-url {
+    transition: all 0.5s ease-in;
+}

@@ -1,0 +1,38 @@
+.meeting-card_wrapper {
+    width: 100%;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    box-sizing: border-box;
+    border: solid 1px var(--primary-color-5);
+    font-family: var(--font-family);
+}
+
+.meeting-title {
+    color: var(--primary-color-2);
+}
+
+.meeting-meta {
+    border-bottom: solid 1px var(--primary-color-5);
+}
+
+.meeting-buttons {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 5px;
+}
+
+.notes-btn {
+    background-color: transparent;
+    color: var(--primary-color-4);
+    border: solid 1px var(--primary-color-4);
+}
+
+.notes-btn:hover {
+    background-color: var(--primary-color-4);
+    color: #fff;
+}

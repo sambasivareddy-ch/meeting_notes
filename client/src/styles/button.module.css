@@ -1,0 +1,64 @@
+@import url('../_globals.css');
+
+button {
+    border-radius: var(--border-radius);
+    padding: var(--regular-padding);
+    outline: none;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: var(--regular-font-weight);
+}
+
+.button {
+    border: solid 1px var(--primary-color-1);
+    background-color: transparent;
+}
+
+.link-button {
+    background-color: var(--primary-color-2);
+    border: solid 1px var(--primary-color-2);
+}
+
+.link-button a, .nav-link_btn a {
+    text-decoration: none;
+}
+
+.link-button a {
+    color: #fff;
+}
+
+.nav-link_btn a {
+    color: var(--primary-color-2)
+}
+
+.button:hover, 
+.link-button:hover:not(:disabled), 
+.link-button:hover:not(:disabled) a,
+.nav-link_btn:hover:not(:disabled), 
+.nav-link_btn:hover:not(:disabled) a
+ {
+    transition: all 0.3s ease-in;
+    transform: scale(0.97);
+}
+
+.link-button:hover:not(:disabled) {
+    background-color: #fff;
+    /* border-color: var(--primary-color-5); */
+}
+
+.link-button:hover:not(:disabled) a {
+    color: var(--primary-color-2);
+}
+
+.nav-link_btn:hover:not(:disabled) a {
+    color: #fff;
+}
+
+button:disabled, button:disabled a{
+    cursor:not-allowed;
+}
+
+.btn-selected {
+    color: var(--primary-color-1);
+    border: solid 1px;
+}

@@ -1,0 +1,76 @@
+.text-editor_wrapper {
+    width: 100%;
+    background-color: var(--white-shade);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-editor {
+    width: 8.5in;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-editor .ql-container {
+    width: 100%;
+    min-height: 11in;
+    padding: 0.5in;
+    border: solid 2px var(--white-shade);
+    margin: 1rem;
+    background-color: #fff;
+}
+
+.text-editor .ql-toolbar {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--white-shade);
+}
+
+.editor-btn_wrapper {
+    width: 8.5in;
+    box-sizing: border-box;
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+    background-color: var(--white-shade);
+    display: flex;
+    gap: var(--regular-gap);
+}
+
+.save-btn {
+    background-color: var(--primary-color-2);
+    border-color: var(--primary-color-2);
+    color: #fff;
+}
+
+.save-btn:hover {
+    color: var(--primary-color-2);
+    background-color: #fff;
+}
+
+.print-btn {
+    background-color: var(--white-shade);
+}
+
+@media print {
+    .text-editor .ql-toolbar, .editor-btn_wrapper {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .text-editor {
+        width: 90%;
+    }
+    .text-editor .ql-container {
+        padding: 0.2in;
+    }
+}
