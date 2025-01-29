@@ -63,5 +63,5 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 		fmt.Println(prettyJSON.String())
 	}
 
-	ctx.Redirect(http.StatusFound, "/my-meetings")
+	ctx.Redirect(http.StatusFound, "http://localhost:3000/my-meetings")
 }
