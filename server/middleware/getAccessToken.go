@@ -3,9 +3,6 @@ package middleware
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"io"
-	"log"
 	"net/http"
 	"net/url"
 
@@ -14,56 +11,56 @@ import (
 )
 
 func GetAccessTokenUsingCode(ctx *gin.Context) {
-	var err error
-
 	code := ctx.Query("code")
-	client_id := utils.Client_ID
-	client_secret := utils.Client_Secret
-	redirect_uri := utils.Redirect_Uri
 
+	// No code received from the request
+	if code == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "Missing authorization code",
+		})
+		return
+	}
+
+	// Append all the required information of client
 	reqData := url.Values{}
-	reqData.Add("client_secret", client_secret)
-	reqData.Add("client_id", client_id)
-	reqData.Add("redirect_uri", redirect_uri)
+	reqData.Add("client_secret", utils.Client_Secret)
+	reqData.Add("client_id", utils.Client_ID)
+	reqData.Add("redirect_uri", utils.Redirect_Uri)
 	reqData.Add("code", code)
 	reqData.Add("grant_type", "authorization_code")
 
-	var tokenRequest *http.Request
-	if tokenRequest, err = http.NewRequest(
-		"POST",
-		utils.Google_OAuth_Token_Uri,
-		bytes.NewBufferString(reqData.Encode()),
-	); err != nil {
-		log.Fatalf("unable to create the token request")
+	// Now create a request to Google OAuth URI for generating the token
+	tokenRequest, err := http.NewRequest("POST", utils.Google_OAuth_Token_Uri, bytes.NewBufferString(reqData.Encode()))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to create token request",
+		})
+		return
 	}
 
 	tokenRequest.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
+	// Client HTTP to make request
 	client := &http.Client{}
 
-	var response *http.Response
-	if response, err = client.Do(tokenRequest); err != nil {
-		log.Fatalf("Error while sending token request to google token uri")
-	}
-
-	defer response.Body.Close()
-
-	var body []byte
-	body, err = io.ReadAll(response.Body)
+	// Now do the request to get the token
+	response, err := client.Do(tokenRequest)
 	if err != nil {
-		log.Fatalf("Unable to read the response body")
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error sending token request",
+		})
 		return
 	}
+	defer response.Body.Close()
 
+	//Now parse the response and store in OAuthResponse Struct to pass to next
 	var oAuthResponse utils.OAuthResponse
-	fmt.Println(json.Unmarshal(body, &oAuthResponse))
-
-	// Step 4: Parse the response
-	// var oAuthResponse utils.OAuthResponse
-	// if err = json.NewDecoder(response.Body).Decode(&oAuthResponse); err != nil {
-	// 	fmt.Println("Error parsing response:", err)
-	// 	return
-	// }
+	if err = json.NewDecoder(response.Body).Decode(&oAuthResponse); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error parsing token response",
+		})
+		return
+	}
 
 	ctx.Set("oAuthResponse", oAuthResponse)
 }
