@@ -63,7 +63,5 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 		fmt.Println(prettyJSON.String())
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"redirect-url": "https://crispy-spoon-jjj464qj7g74hpvxj-3000.app.github.dev/my-meetings",
-	})
+	ctx.Redirect(http.StatusFound, "/my-meetings")
 }
