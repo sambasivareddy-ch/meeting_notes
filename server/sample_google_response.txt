@@ -1,0 +1,9 @@
+{
+  "id": "109183558510073003817",
+  "email": "sambachinta.24@gmail.com",
+  "verified_email": true,
+  "name": "V N G Samba Siva Reddy Chinta",
+  "given_name": "V N G Samba Siva Reddy",
+  "family_name": "Chinta",
+  "picture": "https://lh3.googleusercontent.com/a/ACg8ocI_6zFEk3_u-7bRRm_yJu9jBTn7M5l7cCekTbxpHeU29tg4Eg=s96-c"
+}
