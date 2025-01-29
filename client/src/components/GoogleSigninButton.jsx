@@ -30,14 +30,11 @@ const GoogleSigninButton = (props) => {
     }
 
     return (
-        <form onSubmit={formSubmitHandler}>
-            <button type="submit" className={styles['signin-button']}>
-                <div className={styles['submit-text']}>
-                    <GoogleIcon/> 
-                    <span>Continue with Google</span>
-                </div>
-            </button>
-        </form>
+        <button type="submit" className={styles['signin-button']}>
+            <a href={authUrl}>
+                <GoogleIcon/> Continue with Google
+            </a>
+        </button>
     )
 }
 

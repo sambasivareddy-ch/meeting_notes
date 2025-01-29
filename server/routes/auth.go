@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -55,7 +57,11 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 		return
 	}
 
-	fmt.Println(body)
+	var prettyJSON bytes.Buffer
+	err = json.Indent(&prettyJSON, body, "", "  ")
+	if err == nil {
+		fmt.Println(prettyJSON.String())
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"redirect-url": "https://crispy-spoon-jjj464qj7g74hpvxj-3000.app.github.dev/my-meetings",

@@ -11,7 +11,7 @@
     cursor: pointer;
 }
 
-.signin-button .submit-text {
+.signin-button .submit-text, .signin-button a {
     text-decoration: none;
     color: var(--primary-color-5);
     font-size: var(--regular-font-size);
@@ -30,6 +30,6 @@
     transition: all 0.3s ease-in;
 }
 
-.signin-button:hover .submit-text {
+.signin-button:hover .submit-text, .signin-button:hover a {
     transition: all 0.5s ease-in;
 }
