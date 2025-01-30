@@ -52,19 +52,6 @@ func createDatabaseTables() {
 		FOREIGN KEY (USER_ID) REFERENCES USERS (USER_ID)
 	)`
 
-	// Sessions table
-	sessions_table_create_command := `CREATE TABLE IF NOT EXISTS SESSIONS(
-		USER_ID INT NOT NULL,
-		SESSION_ID TEXT NOT NULL,
-		ACCESS_TOKEN TEXT NOT NULL,
-		REFRESH_TOKEN TEXT NOT NULL,
-		CREATED_TIME TIMESTAMP NOT NULL,	
-		LAST_USED_TIME TIMESTAMP,
-		EXPIRES_IN INT NOT NULL,
-		PRIMARY KEY (SESSION_ID, ACCESS_TOKEN),
-		FOREIGN KEY (USER_ID) REFERENCES USERS (USER_ID)
-	)`
-
 	// Proceeding with User Table creation
 	prepared_statment, err = AppDatabase.Prepare(user_table_create_command)
 	if err != nil {
@@ -81,15 +68,6 @@ func createDatabaseTables() {
 	}
 	if _, err = prepared_statment.Exec(); err != nil {
 		panic("unable to create the meetings table")
-	}
-
-	// Proceeding with Session Table creation
-	prepared_statment, err = AppDatabase.Prepare(sessions_table_create_command)
-	if err != nil {
-		panic("unable to prepare the create sessions command")
-	}
-	if _, err = prepared_statment.Exec(); err != nil {
-		panic("unable to create the sessions table")
 	}
 
 	// DONE

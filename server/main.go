@@ -32,6 +32,6 @@ func main() {
 
 	// Running the server at "8080" port
 	if err := httpServer.Run(":8080"); err != nil {
-		log.Fatalf(err.Error())
+		log.Fatal(err.Error())
 	}
 }
