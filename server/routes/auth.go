@@ -87,7 +87,20 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 	}
 
 	newSessionId := sessions.GenerateSessionId(oAuthResponse.AccessToken)
-	_, err = sessions.RedisClient.Set(sessions.RedisContext, "session_id", newSessionId, 24*time.Hour).Result()
+	newSessionInfo := &sessions.UserSessionInfo{
+		UserId:      userInfo.Id,
+		AccessToken: oAuthResponse.AccessToken,
+	}
+
+	sessionJsonObject, err := json.Marshal(newSessionInfo)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Unable to create session info",
+		})
+		return
+	}
+
+	_, err = sessions.RedisClient.Set(sessions.RedisContext, newSessionId, sessionJsonObject, 24*time.Hour).Result()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to create a session",
