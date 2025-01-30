@@ -1,0 +1,38 @@
+services:
+    frontend:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        image: sambasivachinta/meeting-notes-client:latest
+        environment:
+            REACT_APP_SERVER_URL: "http://backend:8081"
+        ports:
+            - "3000:80"
+        depends_on:
+            - backend
+    
+    backend:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        image: sambasivachinta/meeting-notes-server:latest
+        ports:
+            - "8080:8080"
+        depends_on:
+            - redis
+    
+    redis:
+        image: redis:latest
+        container_name: app-redis
+        restart: always
+        ports:
+          - "6379:6379"
+        volumes:
+          - redis-data:/data
+        environment:
+          - ALLOW_EMPTY_PASSWORD=yes
+        command: ["redis-server", "--appendonly", "yes"]
+
+volumes:
+    redis-data:
+      driver: local

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/models"
@@ -86,7 +87,7 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 	}
 
 	newSessionId := sessions.GenerateSessionId(oAuthResponse.AccessToken)
-	_, err = sessions.RedisClient.Set(sessions.RedisContext, "session_id", newSessionId, 24*60*60).Result()
+	_, err = sessions.RedisClient.Set(sessions.RedisContext, "session_id", newSessionId, 24*time.Hour).Result()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to create a session",
