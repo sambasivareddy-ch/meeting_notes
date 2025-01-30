@@ -1,7 +1,6 @@
 package models
 
 import (
-	"errors"
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/database"
 )
 
@@ -38,27 +37,21 @@ func (user UserInfo) SaveUser() error {
 }
 
 func (usr UserInfo) IsUserAlreadyExists() (bool, error) {
-	searchQuery := `SELECT USER_ID FROM USERS WHERE USER_ID = ?`
+	searchQuery := `SELECT count(*) FROM USERS WHERE USER_ID = ?`
+	var count int
 
 	preparedStmt, err := database.AppDatabase.Prepare(searchQuery)
 	if err != nil {
 		return false, err
 	}
 
-	result, err := preparedStmt.Exec(
-		usr.Id,
-	)
+	err = preparedStmt.QueryRow(usr.Id).Scan(&count)
 	if err != nil {
-		return false, err 
+		return false, err
 	}
 
-	returnedRowsCount, err := result.RowsAffected()
-	if err != nil {
-		return false, err 
-	}
-
-	if returnedRowsCount != 1 {
-		return false, errors.New("duplicate users exists") 
+	if count == 0 {
+		return false, nil
 	}
 
 	return true, nil
