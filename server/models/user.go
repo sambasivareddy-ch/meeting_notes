@@ -14,8 +14,8 @@ type UserInfo struct {
 	Picture       string `json:"picture"`
 }
 
-func (user UserInfo) SaveUser() error {
-	insertCommand := `INSERT INTO USERS VALUES (?, ?, ?)`
+func (user UserInfo) SaveUser(accessToken string) error {
+	insertCommand := `INSERT INTO USERS VALUES (?, ?, ?, ?)`
 
 	preparedStatement, err := database.AppDatabase.Prepare(insertCommand)
 	if err != nil {
@@ -26,6 +26,7 @@ func (user UserInfo) SaveUser() error {
 		user.Id,
 		user.Name,
 		user.Email,
+		accessToken,
 	)
 
 	if err != nil {
@@ -55,4 +56,20 @@ func (usr UserInfo) IsUserAlreadyExists() (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (usr UserInfo) UpdateUsersAccessToken(newAccessToken string) error {
+	updateQuery := `UPDATE USERS SET ACCESS_TOKEN = ? WHERE USER_ID = ?`
+
+	preparedStmt, err := database.AppDatabase.Prepare(updateQuery)
+	if err != nil {
+		return err
+	}
+
+	_, err = preparedStmt.Exec(newAccessToken, usr.Id)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

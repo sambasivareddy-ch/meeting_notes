@@ -77,10 +77,19 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 
 	if !isUserExists {
 		// Save the user info in the Users table
-		err = userInfo.SaveUser()
+		err = userInfo.SaveUser(oAuthResponse.AccessToken)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"message": "Failed to create the new user",
+			})
+			return
+		}
+	} else {
+		// Just Update the access token
+		err = userInfo.UpdateUsersAccessToken(oAuthResponse.AccessToken)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Failed to update the access token",
 			})
 			return
 		}

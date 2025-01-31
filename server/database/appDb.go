@@ -35,7 +35,8 @@ func createDatabaseTables() {
 	user_table_create_command := `CREATE TABLE IF NOT EXISTS USERS(
 		USER_ID TEXT PRIMARY KEY,
 		USER_NAME TEXT NOT NULL,
-		EMAIL_ADDRESS TEXT NOT NULL
+		EMAIL_ADDRESS TEXT NOT NULL,
+		ACCESS_TOKEN TEXT NOT NULL,
 	)`
 
 	// Meetings table
