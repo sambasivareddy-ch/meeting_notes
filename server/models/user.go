@@ -73,3 +73,20 @@ func (usr UserInfo) UpdateUsersAccessToken(newAccessToken string) error {
 
 	return nil
 }
+
+func GetUserEmailAddress(userId string) (string, error) {
+	selectCommand := "SELECT EMAIL FROM USERS WHERE USER_ID = ?"
+
+	preparedStmt, err := database.AppDatabase.Prepare(selectCommand)
+	if err != nil {
+		return "", err
+	}
+
+	var userEmail string
+	err = preparedStmt.QueryRow(userId).Scan(&userEmail)
+	if err != nil {
+		return "", err
+	}
+
+	return userEmail, nil
+}

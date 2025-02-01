@@ -11,4 +11,9 @@ func RegisterRootRoute(server *gin.Engine) {
 	authenticateGroup := server.Group("/auth")
 	authenticateGroup.Use(middleware.GetAccessTokenUsingCode)
 	authenticateGroup.GET("/callback", CompleteGoogleAuthentication)
+
+	// User Info Group
+	userGroup := server.Group("/user")
+	userGroup.Use(middleware.AuthorizeUser)
+	userGroup.GET("/", GetUserEmailAddress)
 }
