@@ -13,16 +13,7 @@ RUN npm install
 # Now copy the remaining code to working directory
 COPY . ./
 
-# Building the react app
-RUN npm run build
+# Expose 3000
+EXPOSE 3000
 
-FROM nginx:alpine
-
-# Copying the build from /app/build to nginx/html folder
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Exposing port 80 (exposed by nginx)
-EXPOSE 80
-
-# Command to run on container start/run
-CMD ["nginx", "-g", "daemon off;"]
+CMD [ "npm", "start" ]

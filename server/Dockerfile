@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:latest AS builder
 
 # Setting up working directory
 WORKDIR /app 
@@ -13,8 +13,4 @@ COPY . ./
 
 EXPOSE 8080
 
-# Building the app and placing executable file 
-# at /usr/local/bin/ as "goserver" executable
-RUN go build -v -o /usr/local/bin/goserver ./...
-
-CMD [ "goserver" ]
+CMD [ "go", "run", "." ]
