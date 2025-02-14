@@ -61,12 +61,13 @@
 }
 
 @media print {
-    .text-editor .ql-toolbar, .editor-btn_wrapper {
+    .text-editor .ql-toolbar,
+    .editor-btn_wrapper {
         display: none;
     }
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 800px) {
     .text-editor {
         width: 90%;
     }

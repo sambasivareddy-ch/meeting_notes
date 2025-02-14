@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/database"
 )
 
@@ -35,6 +37,22 @@ func (user UserInfo) SaveUser(accessToken string) error {
 
 	// Successfully Saved
 	return nil
+}
+
+func PrintUsersInfo() {
+	selectCommand := `SELECT * FROM USERS`
+
+	rows, err := database.AppDatabase.Query(selectCommand)
+	if err != nil {
+		return
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var user UserInfo
+		rows.Scan(&user.Id, &user.Name, &user.Email)
+		fmt.Println(user.Id, user.Name, user.Email)
+	}
 }
 
 func (usr UserInfo) IsUserAlreadyExists() (bool, error) {
@@ -75,7 +93,7 @@ func (usr UserInfo) UpdateUsersAccessToken(newAccessToken string) error {
 }
 
 func GetUserEmailAddress(userId string) (string, error) {
-	selectCommand := "SELECT EMAIL FROM USERS WHERE USER_ID = ?"
+	selectCommand := "SELECT EMAIL_ADDRESS FROM USERS WHERE USER_ID = ?"
 
 	preparedStmt, err := database.AppDatabase.Prepare(selectCommand)
 	if err != nil {

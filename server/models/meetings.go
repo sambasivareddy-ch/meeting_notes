@@ -6,19 +6,31 @@ import (
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/database"
 )
 
-type Meeting struct {
-	USER_ID             int    `binding:"required"`
-	MEETING_ID          string `binding:"required"`
-	MEETING_TITLE       string `binding:"required"`
-	MEETING_NOTES       string
-	MEETING_STARTTIME   time.Time `binding:"required"`
-	MEETING_ENDTIME     time.Time
-	MEETING_DESCRIPTION string `binding:"required"`
-	MEETING_TYPE        string `binding:"required"`
+type Timings struct {
+	DateTime time.Time `json:"dateTime"`
+	TimeZone string    `json:"timeZone"`
 }
 
-func (meeting *Meeting) Save() error {
-	insertCommand := `INSERT INTO MEETINGS VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+type Organizer struct {
+	Email string `json:"email"`
+	Self bool   `json:"self"`
+}
+
+type Meeting struct {
+	Id          string `json:"id"`
+	Meeting_Title       string `json:"summary"`
+	Meeting_StartTime   Timings `json:"start"`
+	Meeting_EndTime Timings    `json:"end"`
+	Meeting_Link 	  string `json:"hangoutLink"`
+	Meeting_Organizer Organizer `json:"organizer"`
+}
+
+type MeetingsList struct {
+	Meetings []Meeting `json:"items"`
+}
+
+func (meeting *Meeting) Save(user_id string) error {
+	insertCommand := `INSERT INTO MEETINGS (USER_ID, MEETING_ID, MEETING_TITLE, MEETING_STARTTIME, MEETING_LINK, MEETING_ORGANIZER) VALUES (?, ?, ?, ?, ?, ?)`
 
 	preparedStmt, err := database.AppDatabase.Prepare(insertCommand)
 	if err != nil {
@@ -26,14 +38,12 @@ func (meeting *Meeting) Save() error {
 	}
 
 	_, err = preparedStmt.Exec(
-		meeting.USER_ID,
-		meeting.MEETING_ID,
-		meeting.MEETING_TITLE,
-		meeting.MEETING_NOTES,
-		meeting.MEETING_STARTTIME,
-		meeting.MEETING_ENDTIME,
-		meeting.MEETING_DESCRIPTION,
-		meeting.MEETING_TYPE,
+		user_id,
+		meeting.Id,
+		meeting.Meeting_Title,
+		meeting.Meeting_StartTime.DateTime,
+		meeting.Meeting_Link,
+		meeting.Meeting_Organizer.Email,
 	)
 
 	if err != nil {

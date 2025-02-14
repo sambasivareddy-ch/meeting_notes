@@ -8,8 +8,9 @@ import (
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/sessions"
 )
 
-func GetUserEmailAddress(ctx *gin.Context) {
+func GetUserEmailAddressRoute(ctx *gin.Context) {
 	value, isExists := ctx.Get("SessionInfo")
+
 	if !isExists {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Session Info doesn't exists",

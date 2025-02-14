@@ -1,4 +1,4 @@
-@import url('../_globals.css');
+@import url("../_globals.css");
 
 button {
     border-radius: var(--border-radius);
@@ -19,7 +19,8 @@ button {
     border: solid 1px var(--primary-color-2);
 }
 
-.link-button a, .nav-link_btn a {
+.link-button a,
+.nav-link_btn a {
     text-decoration: none;
 }
 
@@ -28,15 +29,14 @@ button {
 }
 
 .nav-link_btn a {
-    color: var(--primary-color-2)
+    color: var(--primary-color-2);
 }
 
-.button:hover, 
-.link-button:hover:not(:disabled), 
+.button:hover,
+.link-button:hover:not(:disabled),
 .link-button:hover:not(:disabled) a,
-.nav-link_btn:hover:not(:disabled), 
-.nav-link_btn:hover:not(:disabled) a
- {
+.nav-link_btn:hover:not(:disabled),
+.nav-link_btn:hover:not(:disabled) a {
     transition: all 0.3s ease-in;
     transform: scale(0.97);
 }
@@ -54,8 +54,9 @@ button {
     color: #fff;
 }
 
-button:disabled, button:disabled a{
-    cursor:not-allowed;
+button:disabled,
+button:disabled a {
+    cursor: not-allowed;
 }
 
 .btn-selected {

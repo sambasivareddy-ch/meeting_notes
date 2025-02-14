@@ -15,5 +15,10 @@ func RegisterRootRoute(server *gin.Engine) {
 	// User Info Group
 	userGroup := server.Group("/user")
 	userGroup.Use(middleware.AuthorizeUser)
-	userGroup.GET("/", GetUserEmailAddress)
+	userGroup.GET("/getemail", GetUserEmailAddressRoute)
+
+	// Meeting Group
+	meetingGroup := server.Group("/meeting")
+	meetingGroup.Use(middleware.AuthorizeUser)
+	meetingGroup.GET("/getmeetings", GetUserMeetingsRoute)
 }

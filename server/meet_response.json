@@ -1,0 +1,51 @@
+{
+    "kind": "calendar#event",
+    "etag": "\"3476615319302000\"",
+    "id": "7g5dbiukmk5fq93f76r59dqkkh", // MEETING_ID
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=N2c1ZGJpdWttazVmcTkzZjc2cjU5ZHFra2ggc2FtYmFjaGludGEuMjRAbQ",
+    "created": "2025-01-31T07:14:19.000Z",
+    "updated": "2025-01-31T07:14:19.651Z",
+    "summary": "Google Meet #123", // MEETING_TITLE
+    "location": "Visakhapatnam, Andhra Pradesh, India",
+    "creator": {
+      "email": "sambachinta.24@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "sambachinta.24@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-31T16:30:00+05:30", // MEETING_STARTTIME
+      "timeZone": "Asia/Kolkata"
+    },
+    "end": {
+      "dateTime": "2025-01-31T17:30:00+05:30", // MEETING_ENDTIME
+      "timeZone": "Asia/Kolkata"
+    },
+    "iCalUID": "7g5dbiukmk5fq93f76r59dqkkh@google.com",
+    "sequence": 0,
+    "hangoutLink": "https://meet.google.com/gbe-wbnz-jym", // MEETING_LINK
+    "conferenceData": { // helpful in determining the whether the event is meet or not
+      "entryPoints": [
+        {
+          "entryPointType": "video",
+          "uri": "https://meet.google.com/gbe-wbnz-jym",
+          "label": "meet.google.com/gbe-wbnz-jym"
+        }
+      ],
+      "conferenceSolution": {
+        "key": {
+          "type": "hangoutsMeet"
+        },
+        "name": "Google Meet",
+        "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+      },
+      "conferenceId": "gbe-wbnz-jym"
+    },
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  }
