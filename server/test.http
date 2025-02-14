@@ -1,2 +1,2 @@
 GET https://www.googleapis.com/calendar/v3/calendars/primary/events
-Authorization: Bearer ya29.a0AXeO80RL39l_sQ2sEWGP43-99Eb3E9TkxZmaDuwT4jZ30y2attkb64diOwhiuGmCpH2At-nmKF4kT8AGIwhbDp8IY5JUwjGz6rKHK0maUd7Sx42yWKAPFEI5XxDjvolxIs25nX9Q_AIBfMrXNZTU_KY7koJIIinjkHLtEZvAaCgYKAfwSARESFQHGX2Migny3xvChF-0Zm97kuKioLw0175
+Authorization: Bearer PlaceGoogleAccessTokenHere
