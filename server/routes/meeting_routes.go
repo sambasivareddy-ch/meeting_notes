@@ -64,7 +64,15 @@ func GetUserMeetingsRoute(ctx *gin.Context) {
 		return
 	}
 
+	updatedMeetingList, err := models.InsertIntoMeetingsTable(meetingsList, sessionInfo.UserId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to insert into meetings table",
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"meetings": meetingsList,
+		"meetings": updatedMeetingList,
 	})
 }

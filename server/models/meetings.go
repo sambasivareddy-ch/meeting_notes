@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/database"
@@ -13,15 +14,15 @@ type Timings struct {
 
 type Organizer struct {
 	Email string `json:"email"`
-	Self bool   `json:"self"`
+	Self  bool   `json:"self"`
 }
 
 type Meeting struct {
-	Id          string `json:"id"`
-	Meeting_Title       string `json:"summary"`
-	Meeting_StartTime   Timings `json:"start"`
-	Meeting_EndTime Timings    `json:"end"`
-	Meeting_Link 	  string `json:"hangoutLink"`
+	Id                string    `json:"id"`
+	Meeting_Title     string    `json:"summary"`
+	Meeting_StartTime Timings   `json:"start"`
+	Meeting_EndTime   Timings   `json:"end"`
+	Meeting_Link      string    `json:"hangoutLink"`
 	Meeting_Organizer Organizer `json:"organizer"`
 }
 
@@ -51,4 +52,20 @@ func (meeting *Meeting) Save(user_id string) error {
 	}
 
 	return nil
+}
+
+func InsertIntoMeetingsTable(meetingsList MeetingsList, user_id string) (MeetingsList, error) {
+	var updateMeetingList MeetingsList
+	for _, meeting := range meetingsList.Meetings {
+		if meeting.Meeting_Link != "" {
+			err := meeting.Save(user_id)
+			updateMeetingList.Meetings = append(updateMeetingList.Meetings, meeting)
+			if err != nil {
+				fmt.Println("Error while saving meeting: ", err)
+				return updateMeetingList, err
+			}
+		}
+	}
+
+	return updateMeetingList, nil
 }
