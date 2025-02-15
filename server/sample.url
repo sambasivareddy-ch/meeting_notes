@@ -1,5 +1,0 @@
-http://localhost:8080/
-    ? code=4/0AQlEd8xm6wesS-pvZrOXqtoc4WJgPLTr-6IBH3lPvDOWkzuZxKXvP9UzESyksvPQ6PM8Gg
-    & scope=email%20profile%20https://www.googleapis.com/auth/calendar.readonly%20openid%20https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email
-    & authuser=0
-    & prompt=consent
