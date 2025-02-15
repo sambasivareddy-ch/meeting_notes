@@ -8,9 +8,12 @@ const NavLinkButton = (props) => {
 
     return (
         <button className={classes}>
-            <Link to={`/my-meetings/add-notes/${props.meeting_id}`}>
+            {!props.isEdit && <Link to={`/my-meetings/add-notes/${props.meeting_id}`}>
                 {props.text}
-            </Link>
+            </Link>}
+            {props.isEdit && <Link to={`/my-meetings/edit-notes/${props.meeting_id}`}>
+                {props.text}
+            </Link>}
         </button>
     );
 };

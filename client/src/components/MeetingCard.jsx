@@ -2,7 +2,6 @@ import React from "react";
 
 import LinkButton from "./LinkButton";
 import NavLinkButton from "./NavLinkButton";
-import Button from "./Button";
 import styles from "../styles/meetingcard.module.css";
 
 const MeetingCard = ({
@@ -34,11 +33,17 @@ const MeetingCard = ({
             </div>
             <div className={styles["meeting-buttons"]}>
                 {isNotesTaken ? (
-                    <Button className={styles["notes-btn"]} text="Show Notes" />
+                    <NavLinkButton
+                        className={styles["notes-btn"]}
+                        meeting_id={meeting_id}
+                        isEdit={true}
+                        text="Show or Edit Notes"
+                    />
                 ) : (
                     <NavLinkButton
                         className={styles["notes-btn"]}
                         meeting_id={meeting_id}
+                        isEdit={false}
                         text="Take Notes"
                     />
                 )}

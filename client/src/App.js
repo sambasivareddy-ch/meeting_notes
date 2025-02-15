@@ -12,7 +12,12 @@ function App() {
             <Routes>
                 <Route
                     path="/my-meetings/add-notes/:id"
-                    element={<TextEditor />}
+                    element={<TextEditor isEditMode={false} />}
+                    exact
+                />
+                <Route
+                    path="/my-meetings/edit-notes/:id"
+                    element={<TextEditor isEditMode={true} />}
                     exact
                 />
                 <Route path="/my-meetings" element={<Meetings />} exact />
