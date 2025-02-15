@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -30,7 +31,7 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 	}
 
 	// Verified the Token, now create a request for concerned user profile
-	newProfileRequest, err := http.NewRequest("GET", utils.User_Profile_Uri, nil)
+	newProfileRequest, err := http.NewRequest("GET", os.Getenv("UserProfileUri"), nil)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to create profile request",

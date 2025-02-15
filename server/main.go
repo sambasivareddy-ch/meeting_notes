@@ -8,6 +8,7 @@ import (
 
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/database"
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/routes"
+	"github.com/sambasivareddy-ch/meeting_notes_app/server/utils"
 )
 
 // Base home route
@@ -38,8 +39,11 @@ func main() {
 	// Initialize the Server
 	httpServer := gin.Default()
 
+	// Load the environment variables
+	utils.LoadEnv()
+
 	httpServer.Use(CORSMiddleware())
-	
+
 	// On app startup (initial) initialize the Database & create tables
 	if err := database.InitDB(); err != nil {
 		log.Fatal(err.Error())

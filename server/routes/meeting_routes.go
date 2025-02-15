@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/models"
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/sessions"
-	"github.com/sambasivareddy-ch/meeting_notes_app/server/utils"
 )
 
 func GetUserMeetingsRoute(ctx *gin.Context) {
@@ -29,7 +29,7 @@ func GetUserMeetingsRoute(ctx *gin.Context) {
 		return
 	}
 
-	getEventsRequest, err := http.NewRequest("GET", utils.Google_Calender_Api, nil)
+	getEventsRequest, err := http.NewRequest("GET", os.Getenv("GoogleCalenderEventsApi"), nil)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to create get events request",
@@ -44,7 +44,7 @@ func GetUserMeetingsRoute(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to get events from Google API",
 		})
-		return	
+		return
 	}
 	defer response.Body.Close()
 
@@ -60,7 +60,7 @@ func GetUserMeetingsRoute(ctx *gin.Context) {
 	if err = json.Unmarshal(body, &meetingsList); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to parse events response",
-		})	
+		})
 		return
 	}
 

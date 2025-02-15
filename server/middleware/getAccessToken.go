@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/utils"
@@ -23,14 +24,14 @@ func GetAccessTokenUsingCode(ctx *gin.Context) {
 
 	// Append all the required information of client
 	reqData := url.Values{}
-	reqData.Add("client_secret", utils.Client_Secret)
-	reqData.Add("client_id", utils.Client_ID)
-	reqData.Add("redirect_uri", utils.Redirect_Uri)
+	reqData.Add("client_secret", os.Getenv("ClientSecret"))
+	reqData.Add("client_id", os.Getenv("ClientID"))
+	reqData.Add("redirect_uri", os.Getenv("RedirectUri"))
 	reqData.Add("code", code)
 	reqData.Add("grant_type", "authorization_code")
 
 	// Now create a request to Google OAuth URI for generating the token
-	tokenRequest, err := http.NewRequest("POST", utils.Google_OAuth_Token_Uri, bytes.NewBufferString(reqData.Encode()))
+	tokenRequest, err := http.NewRequest("POST", os.Getenv("GoogleOAuthTokenUri"), bytes.NewBufferString(reqData.Encode()))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to create token request",
