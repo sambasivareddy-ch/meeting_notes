@@ -11,9 +11,9 @@ const Meetings = (props) => {
     const [meetings, setMeetings] = useState([]);
 
     useEffect(() => {
-        const getData = async () => {
+        const getMeetings = async () => {
             const response = await fetch(
-                "http://localhost:8080/user/getemail",
+                "http://localhost:8080/meetings/",
                 {
                     method: "GET",
                     headers: {
@@ -27,27 +27,11 @@ const Meetings = (props) => {
             }
             const data = await response.json();
             setUserEmail(data.email);
-        };
-
-        const getMeetings = async () => {
-            const response = await fetch(
-                "http://localhost:8080/meeting/getmeetings",
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                }
-            );
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
             setMeetings(data.meetings.items);
         };
 
-        getData();
+        // getData();
+        console.log("Meetings page");
         getMeetings();
     }, []);
 
@@ -135,7 +119,7 @@ const Meetings = (props) => {
                                 start_time={meeting.start.dateTime}
                                 url={meeting.hangoutLink}
                                 description={meeting.summary}
-                                isNotesTaken={false}
+                                isNotesTaken={meeting.notes !== ""}
                                 isDisabled={
                                     checkIsStartTimeToday(
                                         meeting.start.dateTime
@@ -166,7 +150,7 @@ const Meetings = (props) => {
                                     start_time={meeting.start.dateTime}
                                     url={meeting.hangoutLink}
                                     description={meeting.summary}
-                                    isNotesTaken={false}
+                                    isNotesTaken={meeting.notes !== ""} 
                                     isDisabled={true}
                                     is_today={false}
                                     key={Math.random()}

@@ -118,6 +118,48 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 		return
 	}
 
+	getEventsRequest, err := http.NewRequest("GET", os.Getenv("GoogleCalenderEventsApi"), nil)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to create get events request",
+		})
+		return
+	}
+
+	getEventsRequest.Header.Add("Authorization", "Bearer "+newSessionInfo.AccessToken)
+	response, err = client.Do(getEventsRequest)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to get events from Google API",
+		})
+		return
+	}
+	defer response.Body.Close()
+
+	eventsResponseBody, err := io.ReadAll(response.Body)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to read events response",
+		})
+		return
+	}
+
+	var meetingsList models.MeetingsList
+	if err = json.Unmarshal(eventsResponseBody, &meetingsList); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to parse events response",
+		})
+		return
+	}
+
+	_, err = models.InsertIntoMeetingsTable(meetingsList, newSessionInfo.UserId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to insert into meetings table",
+		})
+		return
+	}
+
 	ctx.SetCookie("session_id", newSessionId, 24*60*60, "/", "localhost", false, true)
 	ctx.Redirect(http.StatusFound, "http://localhost:3000/my-meetings")
 }
