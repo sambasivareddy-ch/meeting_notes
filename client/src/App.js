@@ -1,5 +1,6 @@
-import "./App.css";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
+import "./App.css";
 
 import Signin from "./pages/Signin";
 import Meetings from "./pages/Meetings";
@@ -10,18 +11,22 @@ function App() {
     return (
         <div className="App">
             <Routes>
-                <Route
-                    path="/my-meetings/add-notes/:id"
-                    element={<TextEditor isEditMode={false} />}
-                    exact
-                />
-                <Route
-                    path="/my-meetings/edit-notes/:id"
-                    element={<TextEditor isEditMode={true} />}
-                    exact
-                />
-                <Route path="/my-meetings" element={<Meetings />} exact />
-                <Route path="/" element={<Signin />} exact />
+                {
+                    <Route
+                        path="/my-meetings/add-notes/:id"
+                        element={<TextEditor isEditMode={false} />}
+                        exact
+                    />
+                }
+                {
+                    <Route
+                        path="/my-meetings/edit-notes/:id"
+                        element={<TextEditor isEditMode={true} />}
+                        exact
+                    />
+                }
+                {<Route path="/my-meetings" element={<Meetings />} exact />}
+                {<Route path="/" element={<Signin />} exact />}
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>

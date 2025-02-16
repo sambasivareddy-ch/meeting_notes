@@ -163,3 +163,27 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 	ctx.SetCookie("session_id", newSessionId, 24*60*60, "/", "localhost", false, true)
 	ctx.Redirect(http.StatusFound, "http://localhost:3000/my-meetings")
 }
+
+func LogoutRoute(ctx *gin.Context) {
+	sessionId, err := ctx.Cookie("session_id")
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"message": "Session not found",
+		})
+		return
+	}
+
+	_, err = sessions.RedisClient.Del(sessions.RedisContext, sessionId).Result()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to delete the session",
+		})
+		return
+	}
+
+	ctx.SetCookie("session_id", "", -1, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, gin.H{
+		"message":     "Logged out successfully",
+		"isLoggedOut": true,
+	})
+}

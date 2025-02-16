@@ -23,7 +23,7 @@
     height: 600px;
 }
 
-.user-info {
+.user-info, .refresh-logout {
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -74,6 +74,27 @@
 .nav-button_selected:hover {
     transition: none;
     transform: scale(0.99);
+}
+
+.meeting-reload_btn {
+    outline: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+}
+
+.meeting-reload_btn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all 0.3s;
+}
+
+.refresh-logout button:hover {
+    cursor: pointer;
+    color: #fff;
+    background-color: var(--primary-color-1);
+    border-color: var(--primary-color-1);
 }
 
 @media screen and (max-width: 750px) {

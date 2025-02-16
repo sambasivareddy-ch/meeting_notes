@@ -12,16 +12,13 @@ const Meetings = (props) => {
 
     useEffect(() => {
         const getMeetings = async () => {
-            const response = await fetch(
-                "http://localhost:8080/meetings/",
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                }
-            );
+            const response = await fetch("http://localhost:8080/meetings/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -34,6 +31,44 @@ const Meetings = (props) => {
         console.log("Meetings page");
         getMeetings();
     }, []);
+
+    const refreshButtonClickHandler = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/meetings/reload", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setMeetings(data.meetings.items);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const logoutButtonClickHandler = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/logout", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            await response.json();
+            window.location.href = "/"; // Redirect to the signin page
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const toggleMeetingsDisplayStateToFalse = () => {
         setShouldShowPastMeetings(false);
@@ -70,7 +105,10 @@ const Meetings = (props) => {
                     <h1>My Meetings</h1>
                     <div className={styles["user-info"]}>
                         <p>on {userEmail}</p>
-                        <a href="/">logout</a>
+                    </div>
+                    <div className={styles["refresh-logout"]}>
+                        <Button text="refresh" onClickHandler={refreshButtonClickHandler} />
+                        <Button text="logout" onClickHandler={logoutButtonClickHandler} />
                     </div>
                 </div>
                 <div className={styles["nav-buttons-wrapper"]}>
@@ -95,6 +133,7 @@ const Meetings = (props) => {
                 </div>
                 <div className={styles["meetings"]}>
                     {!shouldShowPastMeetings &&
+                        meetings &&
                         meetings.length > 0 &&
                         getScheduledMeetings(meetings).length === 0 && (
                             <h2 className={styles["no-meetings_message"]}>
@@ -102,6 +141,7 @@ const Meetings = (props) => {
                             </h2>
                         )}
                     {shouldShowPastMeetings &&
+                        meetings &&
                         meetings.length > 0 &&
                         getScheduledMeetings(meetings).length ===
                             meetings.length && (
@@ -110,6 +150,7 @@ const Meetings = (props) => {
                             </h2>
                         )}
                     {!shouldShowPastMeetings &&
+                        meetings &&
                         meetings.length > 0 &&
                         getScheduledMeetings(meetings).length > 0 &&
                         getScheduledMeetings(meetings).map((meeting) => (
@@ -134,6 +175,7 @@ const Meetings = (props) => {
                             />
                         ))}
                     {shouldShowPastMeetings &&
+                        meetings &&
                         meetings.length > 0 &&
                         meetings
                             .filter((meeting) => {
@@ -150,7 +192,7 @@ const Meetings = (props) => {
                                     start_time={meeting.start.dateTime}
                                     url={meeting.hangoutLink}
                                     description={meeting.summary}
-                                    isNotesTaken={meeting.notes !== ""} 
+                                    isNotesTaken={meeting.notes !== ""}
                                     isDisabled={true}
                                     is_today={false}
                                     key={Math.random()}

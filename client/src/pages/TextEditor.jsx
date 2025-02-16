@@ -37,9 +37,6 @@ const TextEditor = (props) => {
         getNotes();
     }, []);
 
-    console.log(notes);
-    
-
     const saveBtnClickHandler = async () => {
         try {
             const response = await fetch(
@@ -78,6 +75,7 @@ const TextEditor = (props) => {
 
         wrapper.innerHTML = "";
         const editor = document.createElement("div");
+        editor.ariaPlaceholder = "Write your notes here...";
         if (props.isEditMode) editor.innerHTML = notes;
         wrapper.append(editor);
         new Quill(editor, { theme: "snow" });

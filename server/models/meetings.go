@@ -121,10 +121,6 @@ func UpdateMeetingNotesWithMeetingId(meetingId string, user_id string, meetingNo
 		return err
 	}
 
-	fmt.Println("Meeting Notes: ", meetingNotes)
-	fmt.Println("Meeting ID: ", meetingId)
-	fmt.Println("User ID: ", user_id)
-
 	_, err = preparedStmt.Exec(meetingNotes, meetingId, user_id)
 	if err != nil {
 		return err

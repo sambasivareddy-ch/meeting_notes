@@ -21,6 +21,12 @@ func RegisterRootRoute(server *gin.Engine) {
 	meetingGroup := server.Group("/meetings")
 	meetingGroup.Use(middleware.AuthorizeUser)
 	meetingGroup.GET("/", GetUserMeetingsRoute)
+	meetingGroup.GET("/reload", ReloadMeetingsRoute)
 	meetingGroup.POST("/:meetingId/notes", UpdateMeetingNotesWithMeetingIdRoute)
 	meetingGroup.GET("/:meetingId/notes", GetNotesForMeetingIdRoute)
+
+	// Logout Group
+	logoutGroup := server.Group("/logout")
+	logoutGroup.Use(middleware.AuthorizeUser)
+	logoutGroup.GET("", LogoutRoute)
 }
