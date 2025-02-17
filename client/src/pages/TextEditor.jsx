@@ -35,7 +35,7 @@ const TextEditor = (props) => {
         };
 
         getNotes();
-    }, []);
+    }, [props.isEditMode, id]);
 
     const saveBtnClickHandler = async () => {
         try {

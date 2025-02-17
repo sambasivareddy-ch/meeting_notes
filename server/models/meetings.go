@@ -140,3 +140,14 @@ func GetMeetingNotesWithMeetingId(meetingId, userid string) (string, error) {
 
 	return meetingNotes, nil
 }
+
+func DeleteFromMeetingList(meetingId, userid string) error {
+	deleteCommand := `DELETE FROM MEETINGS WHERE USER_ID = ? AND MEETING_ID = ?`
+
+	_, err := database.AppDatabase.Exec(deleteCommand, userid, meetingId)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

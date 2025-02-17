@@ -22,7 +22,7 @@
 
 .meeting-buttons {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(3, 1fr);
     gap: 5px;
 }
 
@@ -35,4 +35,20 @@
 .notes-btn:hover {
     background-color: var(--primary-color-4);
     color: #fff;
+}
+
+.notes-delete_btn:not(:disabled):hover {
+    background-color: var(--red-color);
+    border-color: var(--red-color);
+    color: #fff;
+}
+
+.notes-delete_btn:disabled {
+    cursor: not-allowed;
+}
+
+@media screen and (max-width: 500px) {
+    .meeting-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

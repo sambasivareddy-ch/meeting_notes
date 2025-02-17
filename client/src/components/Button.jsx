@@ -10,7 +10,7 @@ const Button = (props) => {
     };
 
     return (
-        <button className={classes} onClick={buttonClickHandler}>
+        <button className={classes} onClick={buttonClickHandler} disabled={props.isDisabled}>
             {props.text}
         </button>
     );

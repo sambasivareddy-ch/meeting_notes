@@ -3,3 +3,7 @@ Authorization: Bearer PlaceGoogleAccessTokenHere
 ###
 
 POST http://localhost:8080/meeting/0j786upl549supnc84pgoggj7v
+###
+
+DELETE https://www.googleapis.com/calendar/v3/calendars/primary/events/0j786upl549supnc84pgoggj7v
+Authorization: Bearer PlaceGoogleAccessTokenHere

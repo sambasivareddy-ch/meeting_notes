@@ -161,6 +161,7 @@ const Meetings = (props) => {
                                 url={meeting.hangoutLink}
                                 description={meeting.summary}
                                 isNotesTaken={meeting.notes !== ""}
+                                organizer={meeting.organizer}
                                 isDisabled={
                                     checkIsStartTimeToday(
                                         meeting.start.dateTime
@@ -195,6 +196,7 @@ const Meetings = (props) => {
                                     isNotesTaken={meeting.notes !== ""}
                                     isDisabled={true}
                                     is_today={false}
+                                    organizer={meeting.organizer}
                                     key={Math.random()}
                                 />
                             ))}

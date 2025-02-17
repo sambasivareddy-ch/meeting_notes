@@ -2,6 +2,7 @@ import React from "react";
 
 import LinkButton from "./LinkButton";
 import NavLinkButton from "./NavLinkButton";
+import Button from "./Button";
 import styles from "../styles/meetingcard.module.css";
 
 const MeetingCard = ({
@@ -13,6 +14,7 @@ const MeetingCard = ({
     isNotesTaken,
     isDisabled,
     is_today,
+    organizer,
 }) => {
     const [date, timeFrame] = start_time.split("T");
     const time = timeFrame.split("+")[0];
@@ -25,11 +27,12 @@ const MeetingCard = ({
             </h2>
             <div className={styles["meeting-meta"]}>
                 <p>
-                    Scheduled Time: {date} at {Math.abs(parseInt(hour) - 12)}:
+                    <b>Scheduled Time:</b> {date} at {Math.abs(parseInt(hour) - 12)}:
                     {minute}:{second}
                     {parseInt(hour) >= 12 ? " PM" : " AM"}
                 </p>
                 <p>{description}</p>
+                <p><b>Organizer:</b> {organizer.email}{ organizer.self === true ? " (You)": "" }</p>
             </div>
             <div className={styles["meeting-buttons"]}>
                 {isNotesTaken ? (
@@ -37,7 +40,7 @@ const MeetingCard = ({
                         className={styles["notes-btn"]}
                         meeting_id={meeting_id}
                         isEdit={true}
-                        text="Show or Edit Notes"
+                        text="Show Notes"
                     />
                 ) : (
                     <NavLinkButton
@@ -47,6 +50,7 @@ const MeetingCard = ({
                         text="Take Notes"
                     />
                 )}
+                <Button text="Delete" className={styles["notes-delete_btn"]} isDisabled={ organizer.self === false } />
                 <LinkButton url={url} text="Join" isDisabled={isDisabled} />
             </div>
         </div>

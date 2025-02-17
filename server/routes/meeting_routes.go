@@ -16,6 +16,10 @@ type NotesBody struct {
 	Notes string `json:"notes"`
 }
 
+type EventIdStruct struct {
+	EventId string `json:"eventid"`
+}
+
 func GetUserMeetingsRoute(ctx *gin.Context) {
 	value, isExists := ctx.Get("SessionInfo")
 
@@ -199,5 +203,65 @@ func ReloadMeetingsRoute(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"meetings": reloadedMeetings,
 		"message":  "Meetings reloaded successfully",
+	})
+}
+
+func DeleteSpecificMeetingRoute(ctx *gin.Context) {
+	value, isExists := ctx.Get("SessionInfo")
+
+	if !isExists {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Session Info doesn't exists",
+		})
+		return
+	}
+
+	sessionInfo, ok := value.(sessions.UserSessionInfo)
+	if !ok {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to assert UserSessionInfo",
+		})
+		return
+	}
+
+	var eventId EventIdStruct
+	err := ctx.BindJSON(&eventId)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "Bad Request, verify the request again",
+		})
+	}
+
+	getEventsRequest, err := http.NewRequest("DELETE", os.Getenv("GoogleCalenderEventsApi")+eventId.EventId, nil)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to create delete events request",
+		})
+		return
+	}
+
+	getEventsRequest.Header.Add("Authorization", "Bearer "+sessionInfo.AccessToken)
+
+	client := &http.Client{}
+	response, err := client.Do(getEventsRequest)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to get events from Google API",
+		})
+		return
+	}
+	defer response.Body.Close()
+
+	err = models.DeleteFromMeetingList(eventId.EventId, sessionInfo.UserId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to insert into meetings table",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"deleted": eventId.EventId,
+		"message": "Given Meeting deleted successfully",
 	})
 }
