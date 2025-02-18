@@ -29,4 +29,8 @@ func RegisterRootRoute(server *gin.Engine) {
 	logoutGroup := server.Group("/logout")
 	logoutGroup.Use(middleware.AuthorizeUser)
 	logoutGroup.GET("", LogoutRoute)
+
+	// Loginstatus Group
+	loginGroup := server.Group("/loginstatus")
+	loginGroup.GET("", LoginStatusRoute)
 }

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import MeetingCard from "../components/MeetingCard";
 import Button from "../components/Button";
+import { logout } from "../store/sessionSlice";
 
 import styles from "../styles/meetings.module.css";
 
 const Meetings = (props) => {
+    const actionDispatcher = useDispatch();
     const [shouldShowPastMeetings, setShouldShowPastMeetings] = useState(false);
     const [userEmail, setUserEmail] = useState(null);
     const [meetings, setMeetings] = useState([]);
@@ -27,8 +30,6 @@ const Meetings = (props) => {
             setMeetings(data.meetings.items);
         };
 
-        // getData();
-        console.log("Meetings page");
         getMeetings();
     }, []);
 
@@ -64,6 +65,8 @@ const Meetings = (props) => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             await response.json();
+
+            actionDispatcher(logout()); // Logout the session
             window.location.href = "/"; // Redirect to the signin page
         } catch (error) {
             console.error(error);

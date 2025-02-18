@@ -161,7 +161,7 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 	}
 
 	ctx.SetCookie("session_id", newSessionId, 24*60*60, "/", "localhost", false, true)
-	ctx.Redirect(http.StatusFound, "http://localhost:3000/my-meetings")
+	ctx.Redirect(http.StatusFound, "http://localhost:3000/")
 }
 
 func LogoutRoute(ctx *gin.Context) {
@@ -185,5 +185,19 @@ func LogoutRoute(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"message":     "Logged out successfully",
 		"isLoggedOut": true,
+	})
+}
+
+func LoginStatusRoute(ctx *gin.Context) {
+	_, err := ctx.Cookie("session_id")
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"isLoggedIn": false,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"isLoggedIn": true,
 	})
 }
