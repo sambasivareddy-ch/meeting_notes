@@ -55,8 +55,8 @@ const TextEditor = (props) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
-            console.log(data);
+            await response.json();
+            window.location.href = '/my-meetings'
         } catch (error) {
             console.error(error);
         }

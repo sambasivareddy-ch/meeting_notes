@@ -8,6 +8,10 @@
     align-items: center;
 }
 
+.meetings-page_wrapper__scroll-hidden {
+    overflow: hidden;
+}
+
 .meetings-wrapper {
     width: 80%;
     height: 100%;

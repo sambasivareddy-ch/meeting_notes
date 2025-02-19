@@ -1,0 +1,26 @@
+.notes-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+
+    display: grid;
+    place-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+
+    z-index: 999;
+}
+
+.main-container {
+    width: 60%;
+    height: 100%;
+    background-color: var(--white-shade);
+    padding: var( --regular-padding);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    overflow-y: scroll;
+}

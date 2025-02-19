@@ -12,6 +12,15 @@ const Meetings = (props) => {
     const [shouldShowPastMeetings, setShouldShowPastMeetings] = useState(false);
     const [userEmail, setUserEmail] = useState(null);
     const [meetings, setMeetings] = useState([]);
+    const [isModelShow, setIsModelShow] = useState(false);
+
+    const toggleModelShowHandler = () => {
+        setIsModelShow(!isModelShow);
+    };
+
+    const mainWrapperClasses = `${styles["meetings-page_wrapper"]} ${
+        isModelShow ? styles["meetings-page_wrapper__scroll-hidden"] : ""
+    }`;
 
     useEffect(() => {
         const getMeetings = async () => {
@@ -35,13 +44,16 @@ const Meetings = (props) => {
 
     const refreshButtonClickHandler = async () => {
         try {
-            const response = await fetch("http://localhost:8080/meetings/reload", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-            });
+            const response = await fetch(
+                "http://localhost:8080/meetings/reload",
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                }
+            );
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -102,7 +114,7 @@ const Meetings = (props) => {
     };
 
     return (
-        <div className={styles["meetings-page_wrapper"]}>
+        <div className={mainWrapperClasses}>
             <div className={styles["meetings-wrapper"]}>
                 <div className={styles["meetings-header"]}>
                     <h1>My Meetings</h1>
@@ -110,8 +122,14 @@ const Meetings = (props) => {
                         <p>on {userEmail}</p>
                     </div>
                     <div className={styles["refresh-logout"]}>
-                        <Button text="refresh" onClickHandler={refreshButtonClickHandler} />
-                        <Button text="logout" onClickHandler={logoutButtonClickHandler} />
+                        <Button
+                            text="refresh"
+                            onClickHandler={refreshButtonClickHandler}
+                        />
+                        <Button
+                            text="logout"
+                            onClickHandler={logoutButtonClickHandler}
+                        />
                     </div>
                 </div>
                 <div className={styles["nav-buttons-wrapper"]}>
@@ -165,6 +183,7 @@ const Meetings = (props) => {
                                 description={meeting.summary}
                                 isNotesTaken={meeting.notes !== ""}
                                 organizer={meeting.organizer}
+                                modelShowHandler={toggleModelShowHandler}
                                 isDisabled={
                                     checkIsStartTimeToday(
                                         meeting.start.dateTime
@@ -197,6 +216,7 @@ const Meetings = (props) => {
                                     url={meeting.hangoutLink}
                                     description={meeting.summary}
                                     isNotesTaken={meeting.notes !== ""}
+                                    modelShowHandler={toggleModelShowHandler}
                                     isDisabled={true}
                                     is_today={false}
                                     organizer={meeting.organizer}
