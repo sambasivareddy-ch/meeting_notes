@@ -1,6 +1,6 @@
 # Meeting Notes
 
-## Demonstration Vide
+## Demonstration Video
 [Application](https://drive.google.com/file/d/1b8haJ3x8g18WdpJb2K6QtBS1Qk0nQmLI/view?usp=drive_link)
 
 ## Overview
