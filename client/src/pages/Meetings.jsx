@@ -174,29 +174,35 @@ const Meetings = (props) => {
                         meetings &&
                         meetings.length > 0 &&
                         getScheduledMeetings(meetings).length > 0 &&
-                        getScheduledMeetings(meetings).map((meeting) => (
-                            <MeetingCard
-                                meeting_id={meeting.id}
-                                title={meeting.summary}
-                                start_time={meeting.start.dateTime}
-                                url={meeting.hangoutLink}
-                                description={meeting.summary}
-                                isNotesTaken={meeting.notes !== ""}
-                                organizer={meeting.organizer}
-                                modelShowHandler={toggleModelShowHandler}
-                                isDisabled={
-                                    checkIsStartTimeToday(
-                                        meeting.start.dateTime
-                                    ) !== 1
-                                }
-                                is_today={
-                                    checkIsStartTimeToday(
-                                        meeting.start.dateTime
-                                    ) === 1
-                                }
-                                key={Math.random()}
-                            />
-                        ))}
+                        getScheduledMeetings(meetings)
+                            .sort(
+                                (a, b) =>
+                                    new Date(a.start.dateTime) -
+                                    new Date(b.start.dateTime)
+                            )
+                            .map((meeting) => (
+                                <MeetingCard
+                                    meeting_id={meeting.id}
+                                    title={meeting.summary}
+                                    start_time={meeting.start.dateTime}
+                                    url={meeting.hangoutLink}
+                                    description={meeting.summary}
+                                    isNotesTaken={meeting.notes !== ""}
+                                    organizer={meeting.organizer}
+                                    modelShowHandler={toggleModelShowHandler}
+                                    isDisabled={
+                                        checkIsStartTimeToday(
+                                            meeting.start.dateTime
+                                        ) !== 1
+                                    }
+                                    is_today={
+                                        checkIsStartTimeToday(
+                                            meeting.start.dateTime
+                                        ) === 1
+                                    }
+                                    key={Math.random()}
+                                />
+                            ))}
                     {shouldShowPastMeetings &&
                         meetings &&
                         meetings.length > 0 &&
@@ -208,6 +214,11 @@ const Meetings = (props) => {
                                     ) === 0
                                 );
                             })
+                            .sort(
+                                (a, b) =>
+                                    new Date(a.start.dateTime) -
+                                    new Date(b.start.dateTime)
+                            )
                             .map((meeting) => (
                                 <MeetingCard
                                     meeting_id={meeting.id}
