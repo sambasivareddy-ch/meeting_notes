@@ -5,9 +5,9 @@ services:
             dockerfile: Dockerfile
         image: sambasivachinta/meeting-notes-client:latest
         environment:
-            REACT_APP_SERVER_URL: "http://backend:8081"
+            REACT_APP_SERVER_URL: "http://backend:8080"
         ports:
-            - "3000:80"
+            - "3000:3000"
         depends_on:
             - backend
     
