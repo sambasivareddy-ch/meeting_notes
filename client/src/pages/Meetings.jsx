@@ -24,7 +24,7 @@ const Meetings = (props) => {
 
     useEffect(() => {
         const getMeetings = async () => {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/meetings/`, {
+            const response = await fetch(`http://localhost:8080/meetings/`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const Meetings = (props) => {
     const refreshButtonClickHandler = async () => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_SERVER_URL}/meetings/reload`,
+                `http://localhost:8080/meetings/reload`,
                 {
                     method: "GET",
                     headers: {
@@ -66,7 +66,7 @@ const Meetings = (props) => {
 
     const logoutButtonClickHandler = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/logout`, {
+            const response = await fetch(`http://localhost:8080/logout`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

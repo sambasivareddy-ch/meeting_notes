@@ -16,6 +16,8 @@ services:
             context: ./server
             dockerfile: Dockerfile
         image: sambasivachinta/meeting-notes-server:latest
+        environment:
+            REDIS_LISTENING_ADDR: "redis:6379"
         ports:
             - "8080:8080"
         depends_on:

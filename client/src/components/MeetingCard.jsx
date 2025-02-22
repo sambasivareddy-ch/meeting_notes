@@ -42,7 +42,7 @@ const MeetingCard = ({
         const getNotes = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.REACT_APP_SERVER_URL}/meetings/${meeting_id}/notes`,
+                    `http://localhost:8080/meetings/${meeting_id}/notes`,
                     {
                         method: "GET",
                         headers: {

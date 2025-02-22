@@ -15,7 +15,7 @@ const TextEditor = (props) => {
         const getNotes = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.REACT_APP_SERVER_URL}/meetings/${id}/notes`,
+                    `http://localhost:8080/meetings/${id}/notes`,
                     {
                         method: "GET",
                         headers: {
@@ -40,7 +40,7 @@ const TextEditor = (props) => {
     const saveBtnClickHandler = async () => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_SERVER_URL}/meetings/${id}/notes`,
+                `http://localhost:8080/meetings/${id}/notes`,
                 {
                     method: "POST",
                     headers: {
