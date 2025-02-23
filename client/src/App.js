@@ -18,7 +18,7 @@ function App() {
     useEffect(() => {
         const getAndSetLoginStatus = async () => {
             try {
-                const response = await fetch('http://localhost:8080/loginstatus', {
+                const response = await fetch(`http://localhost:8080/loginstatus`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ package sessions
 
 import (
 	"context"
+	"os"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -14,7 +15,7 @@ type UserSessionInfo struct {
 var RedisContext = context.Background()
 
 var RedisClient = redis.NewClient(&redis.Options{
-	Addr:     "localhost:6379",
+	Addr:     os.Getenv("REDIS_LISTENING_ADDR"),
 	Password: "",
 	DB:       0,
 })
