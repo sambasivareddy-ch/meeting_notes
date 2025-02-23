@@ -1,7 +1,7 @@
 export const getGoogleAuthURL = () => {
     const requestOptions = {
-        redirect_uri: process.env.REACT_APP_REDIRECT_URI,
-        client_id: process.env.REACT_APP_CLIENT_ID,
+        redirect_uri: import.meta.env.VITE_APP_REDIRECT_URI,
+        client_id: import.meta.env.VITE_APP_CLIENT_ID,
         access_type: "offline",
         response_type: "code",
         prompt: "consent",
@@ -14,5 +14,5 @@ export const getGoogleAuthURL = () => {
 
     const searchParams = new URLSearchParams(requestOptions);
 
-    return `${process.env.REACT_APP_AUTH_URI}?${searchParams.toString()}`;
+    return `${import.meta.env.VITE_APP_AUTH_URI}?${searchParams.toString()}`;
 };
