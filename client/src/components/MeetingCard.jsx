@@ -42,7 +42,7 @@ const MeetingCard = ({
         const getNotes = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:8080/meetings/${meeting_id}/notes`,
+                    `${import.meta.env.VITE_APP_SERVER_URI}/meetings/${meeting_id}/notes`,
                     {
                         method: "GET",
                         headers: {
