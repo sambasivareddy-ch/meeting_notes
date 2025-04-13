@@ -17,7 +17,7 @@ type UserInfo struct {
 }
 
 func (user UserInfo) SaveUser(accessToken string) error {
-	insertCommand := `INSERT INTO USERS VALUES (?, ?, ?, ?)`
+	insertCommand := `INSERT INTO USERS VALUES ($1, $2, $3, $4)`
 
 	preparedStatement, err := database.AppDatabase.Prepare(insertCommand)
 	if err != nil {
@@ -56,7 +56,7 @@ func PrintUsersInfo() {
 }
 
 func (usr UserInfo) IsUserAlreadyExists() (bool, error) {
-	searchQuery := `SELECT count(*) FROM USERS WHERE USER_ID = ?`
+	searchQuery := `SELECT count(*) FROM USERS WHERE USER_ID = $1`
 	var count int
 
 	preparedStmt, err := database.AppDatabase.Prepare(searchQuery)
@@ -77,7 +77,7 @@ func (usr UserInfo) IsUserAlreadyExists() (bool, error) {
 }
 
 func (usr UserInfo) UpdateUsersAccessToken(newAccessToken string) error {
-	updateQuery := `UPDATE USERS SET ACCESS_TOKEN = ? WHERE USER_ID = ?`
+	updateQuery := `UPDATE USERS SET ACCESS_TOKEN = $1 WHERE USER_ID = $2`
 
 	preparedStmt, err := database.AppDatabase.Prepare(updateQuery)
 	if err != nil {
@@ -93,7 +93,7 @@ func (usr UserInfo) UpdateUsersAccessToken(newAccessToken string) error {
 }
 
 func GetUserEmailAddress(userId string) (string, error) {
-	selectCommand := "SELECT EMAIL_ADDRESS FROM USERS WHERE USER_ID = ?"
+	selectCommand := "SELECT EMAIL_ADDRESS FROM USERS WHERE USER_ID = $1"
 
 	preparedStmt, err := database.AppDatabase.Prepare(selectCommand)
 	if err != nil {
