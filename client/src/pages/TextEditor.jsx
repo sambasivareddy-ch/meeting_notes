@@ -15,7 +15,7 @@ const TextEditor = (props) => {
         const getNotes = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:8080/meetings/${id}/notes`,
+                    `${import.meta.env.VITE_APP_SERVER_URI}/meetings/${id}/notes`,
                     {
                         method: "GET",
                         headers: {
@@ -40,7 +40,7 @@ const TextEditor = (props) => {
     const saveBtnClickHandler = async () => {
         try {
             const response = await fetch(
-                `http://localhost:8080/meetings/${id}/notes`,
+                `${import.meta.env.VITE_APP_SERVER_URI}/meetings/${id}/notes`,
                 {
                     method: "POST",
                     headers: {
