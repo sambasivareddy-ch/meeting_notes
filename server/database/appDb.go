@@ -5,15 +5,14 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/mattn/go-sqlite3"
-	// _ "github.com/lib/pq"
+	_ "github.com/lib/pq"
 )
 
 const (
-	host     = "172.17.0.3"
+	host     = "localhost"
 	port     = 5432
-	user     = "postgres"
-	password = "samba123"
+	user     = "samba-17793"
+	password = ""
 	dbname   = "postgres"
 )
 
@@ -24,8 +23,8 @@ var AppDatabase *sql.DB
 func InitDB() error {
 	var err error
 
-	// connectionString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	AppDatabase, err = sql.Open("sqlite3", "app_database.db")
+	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	AppDatabase, err = sql.Open("postgres", dsn)
 
 	if err != nil {
 		log.Fatalf("failed to connect the database")
@@ -52,8 +51,8 @@ func createDatabaseTables() {
 
 	// Meetings table
 	meetings_table_create_command := `CREATE TABLE IF NOT EXISTS MEETINGS(
-		USER_ID INT NOT NULL,
-		MEETING_ID INT NOT NULL,
+		USER_ID TEXT NOT NULL,
+		MEETING_ID TEXT NOT NULL,
 		MEETING_TITLE TEXT NOT NULL,
 		MEETING_NOTES TEXT,
 		MEETING_STARTTIME TIMESTAMP NOT NULL,

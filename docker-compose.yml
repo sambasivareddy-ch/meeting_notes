@@ -22,6 +22,7 @@ services:
             - "8080:8080"
         depends_on:
             - redis
+            - postgres
     
     redis:
         image: redis:latest
@@ -34,7 +35,21 @@ services:
         environment:
           - ALLOW_EMPTY_PASSWORD=yes
         command: ["redis-server", "--appendonly", "yes"]
+    
+    postgres:
+        image: postgres:latest
+        container_name: app-postgres
+        restart: always
+        ports:
+          - "5432:5432"
+        volumes:
+          - postgres-data:/var/lib/postgresql/data
+        environment:
+          - POSTGRES_USER: postgres
+          - POSTGRES_PASSWORD: postgres
 
 volumes:
     redis-data:
+      driver: local
+    postgres-data:
       driver: local

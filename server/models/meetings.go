@@ -45,7 +45,7 @@ type MeetingsListFromTable struct {
 }
 
 func (meeting *Meeting) Save(user_id string) error {
-	insertCommand := `INSERT INTO MEETINGS (USER_ID, MEETING_ID, MEETING_TITLE, MEETING_STARTTIME, MEETING_LINK, MEETING_ORGANIZER) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING`
+	insertCommand := `INSERT INTO MEETINGS (USER_ID, MEETING_ID, MEETING_TITLE, MEETING_STARTTIME, MEETING_LINK, MEETING_ORGANIZER) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT DO NOTHING`
 
 	preparedStmt, err := database.AppDatabase.Prepare(insertCommand)
 	if err != nil {
@@ -86,7 +86,7 @@ func InsertIntoMeetingsTable(meetingsList MeetingsList, user_id string) (Meeting
 
 func GetMeetingsList(user_id string) (MeetingsListFromTable, error) {
 	var meetingsList MeetingsListFromTable
-	selectCommand := `SELECT MEETING_ID, MEETING_TITLE, MEETING_STARTTIME, COALESCE(MEETING_NOTES, '') AS MEETING_NOTES, MEETING_LINK, MEETING_ORGANIZER FROM MEETINGS WHERE USER_ID = ?`
+	selectCommand := `SELECT MEETING_ID, MEETING_TITLE, MEETING_STARTTIME, COALESCE(MEETING_NOTES, '') AS MEETING_NOTES, MEETING_LINK, MEETING_ORGANIZER FROM MEETINGS WHERE USER_ID = $1`
 
 	rows, err := database.AppDatabase.Query(selectCommand, user_id)
 	if err != nil {
@@ -114,7 +114,7 @@ func GetMeetingsList(user_id string) (MeetingsListFromTable, error) {
 }
 
 func UpdateMeetingNotesWithMeetingId(meetingId string, user_id string, meetingNotes string) error {
-	updateCommand := `UPDATE MEETINGS SET MEETING_NOTES = ? WHERE MEETING_ID = ? AND USER_ID = ?`
+	updateCommand := `UPDATE MEETINGS SET MEETING_NOTES = $1 WHERE MEETING_ID = $2 AND USER_ID = $3`
 
 	preparedStmt, err := database.AppDatabase.Prepare(updateCommand)
 	if err != nil {
@@ -131,7 +131,7 @@ func UpdateMeetingNotesWithMeetingId(meetingId string, user_id string, meetingNo
 
 func GetMeetingNotesWithMeetingId(meetingId, userid string) (string, error) {
 	var meetingNotes string
-	selectCommand := `SELECT COALESCE(MEETING_NOTES, '') FROM MEETINGS WHERE MEETING_ID = ? AND USER_ID = ?`
+	selectCommand := `SELECT COALESCE(MEETING_NOTES, '') FROM MEETINGS WHERE MEETING_ID = $1 AND USER_ID = $2`
 
 	err := database.AppDatabase.QueryRow(selectCommand, meetingId, userid).Scan(&meetingNotes)
 	if err != nil {
@@ -142,7 +142,7 @@ func GetMeetingNotesWithMeetingId(meetingId, userid string) (string, error) {
 }
 
 func DeleteFromMeetingList(meetingId, userid string) error {
-	deleteCommand := `DELETE FROM MEETINGS WHERE USER_ID = ? AND MEETING_ID = ?`
+	deleteCommand := `DELETE FROM MEETINGS WHERE USER_ID = $1 AND MEETING_ID = $2`
 
 	_, err := database.AppDatabase.Exec(deleteCommand, userid, meetingId)
 	if err != nil {
