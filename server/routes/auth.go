@@ -160,7 +160,7 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("session_id", newSessionId, 24*60*60, "/", "meeting-notes-phi.vercel.app", false, true)
+	ctx.SetCookie("session_id", newSessionId, 24*60*60, "/", "meeting-notes-phi.vercel.app", true, true)
 	ctx.Redirect(http.StatusFound, "https://meeting-notes-phi.vercel.app/")
 }
 
@@ -181,7 +181,7 @@ func LogoutRoute(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("session_id", "", -1, "/", "meeting-notes-phi.vercel.app", false, true)
+	ctx.SetCookie("session_id", "", -1, "/", "meeting-notes-phi.vercel.app", true, true)
 	ctx.JSON(http.StatusOK, gin.H{
 		"message":     "Logged out successfully",
 		"isLoggedOut": true,
