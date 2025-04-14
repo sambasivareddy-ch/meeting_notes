@@ -8,6 +8,7 @@ import Signin from "./pages/Signin";
 import Meetings from "./pages/Meetings";
 import TextEditor from "./pages/TextEditor";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import { login } from "./store/sessionSlice";
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
                     />
                 }
                 {isLoggedIn && <Route path="/my-meetings" element={<Meetings />} exact />}
+                {<Route path="/privacy-policy" element={<PrivacyPolicy/>} exact />}
                 {!isLoggedIn && <Route path="/" element={<Signin />} exact />}
                 <Route path="*" element={<NotFound />} />
             </Routes>
