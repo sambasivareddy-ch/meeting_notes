@@ -12,4 +12,5 @@ func LoadEnv() {
 	os.Setenv("RedirectUri", "http://localhost:8080/auth/callback")
 	os.Setenv("UserProfileUri", "https://www.googleapis.com/oauth2/v1/userinfo?alt=json")
 	os.Setenv("GoogleCalenderEventsApi", "https://www.googleapis.com/calendar/v3/calendars/primary/events")
+	os.Setenv("PostgresPassword", "ERVP9cA09OQEQfk3CCOQGRcaQVeZWGyh")
 }
