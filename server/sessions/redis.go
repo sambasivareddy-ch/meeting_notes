@@ -16,6 +16,7 @@ var RedisContext = context.Background()
 
 var RedisClient = redis.NewClient(&redis.Options{
 	Addr:     os.Getenv("REDIS_LISTENING_ADDR"),
-	Password: "",
+	Username: "default",
+	Password: os.Getenv("REDIS_PASSWORD"),
 	DB:       0,
 })
