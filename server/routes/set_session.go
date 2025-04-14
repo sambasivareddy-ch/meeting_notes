@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +20,17 @@ func SetCookieRoute(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("session_id", body.Token, 24*60*60, "/", "meeting-notes-phi.vercel.app", true, true)
+	// ctx.SetCookie("session_id", body.Token, 24*60*60, "/", "meeting-notes-phi.vercel.app", true, true)
+
+	http.SetCookie(ctx.Writer, &http.Cookie{
+		Name: "session_id",
+		Value: body.Token,
+		Path: "/",
+		Expires: time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+		Secure: true,
+		SameSite: http.SameSiteNoneMode,
+	})
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "session created",
