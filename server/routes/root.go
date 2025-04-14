@@ -33,4 +33,8 @@ func RegisterRootRoute(server *gin.Engine) {
 	// Loginstatus Group
 	loginGroup := server.Group("/loginstatus")
 	loginGroup.GET("", LoginStatusRoute)
+
+	// Cookie Group
+	cookieGroup := server.Group("/set-cookie")
+	cookieGroup.POST("", SetCookieRoute)
 }

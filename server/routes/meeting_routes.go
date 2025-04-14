@@ -198,7 +198,7 @@ func ReloadMeetingsRoute(ctx *gin.Context) {
 		return
 	}
 
-	reloadedMeetings, err := models.GetMeetingsList(sessionInfo.UserId)
+	reloadedMeetings, _ := models.GetMeetingsList(sessionInfo.UserId)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"meetings": reloadedMeetings,

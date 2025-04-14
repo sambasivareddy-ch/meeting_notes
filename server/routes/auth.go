@@ -160,8 +160,8 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("session_id", newSessionId, 24*60*60, "/", "meeting-notes-phi.vercel.app", true, true)
-	ctx.Redirect(http.StatusFound, "https://meeting-notes-phi.vercel.app/")
+	// ctx.SetCookie("session_id", newSessionId, 24*60*60, "/", "meeting-notes-phi.vercel.app", true, true)
+	ctx.Redirect(http.StatusFound, "https://meeting-notes-phi.vercel.app/?token="+newSessionId)
 }
 
 func LogoutRoute(ctx *gin.Context) {
