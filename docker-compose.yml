@@ -7,7 +7,7 @@ services:
         environment:
             REACT_APP_SERVER_URL: "http://backend:8080"
         ports:
-            - "3000:80"
+            - "3000:3000"
         depends_on:
             - backend
     
@@ -16,6 +16,8 @@ services:
             context: ./server
             dockerfile: Dockerfile
         image: sambasivachinta/meeting-notes-server:latest
+        environment:
+            REDIS_LISTENING_ADDR: "redis:6379"
         ports:
             - "8080:8080"
         depends_on:
