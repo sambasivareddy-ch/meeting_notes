@@ -8,7 +8,7 @@ import (
 
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/database"
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/routes"
-	"github.com/sambasivareddy-ch/meeting_notes_app/server/utils"
+	// "github.com/sambasivareddy-ch/meeting_notes_app/server/utils"
 )
 
 // Base home route
@@ -40,7 +40,7 @@ func main() {
 	httpServer := gin.Default()
 
 	// Load the environment variables
-	utils.LoadEnv()
+	// utils.LoadEnv()
 
 	httpServer.Use(CORSMiddleware())
 

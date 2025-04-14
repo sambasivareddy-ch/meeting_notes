@@ -2,6 +2,7 @@ package routes
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -75,6 +76,9 @@ func CompleteGoogleAuthentication(ctx *gin.Context) {
 		})
 		return
 	}
+
+	fmt.Println(userInfo.Email)
+	fmt.Println(userInfo.Name)
 
 	if !isUserExists {
 		// Save the user info in the Users table
