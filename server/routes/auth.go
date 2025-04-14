@@ -185,7 +185,18 @@ func LogoutRoute(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("session_id", "", -1, "/", "meeting-notes-phi.vercel.app", true, true)
+	// ctx.SetCookie("session_id", "", -1, "/", "meeting-notes-phi.vercel.app", true, true)
+	http.SetCookie(c.Writer, &http.Cookie{
+	    Name:     "session_id",
+	    Value:    "",
+	    Path:     "/",
+	    MaxAge:   -1, 
+	    Expires:  time.Unix(0, 0), 
+	    HttpOnly: true,
+	    Secure:   true,
+	    SameSite: http.SameSiteNoneMode,
+	})
+	
 	ctx.JSON(http.StatusOK, gin.H{
 		"message":     "Logged out successfully",
 		"isLoggedOut": true,
