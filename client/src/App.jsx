@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Analytics } from "@vercel/analytics/react"
 
 import "./App.css";
 
@@ -68,6 +69,7 @@ function App() {
                 {!isLoggedIn && <Route path="/" element={<Signin />} exact />}
                 <Route path="*" element={<NotFound />} />
             </Routes>
+            <Analytics/>
         </div>
     );
 }
