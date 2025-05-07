@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
@@ -66,7 +65,6 @@ func createDatabaseTables() {
 	// Proceeding with User Table creation
 	prepared_statment, err = AppDatabase.Prepare(user_table_create_command)
 	if err != nil {
-		fmt.Print(err)
 		panic("unable to prepare the create users command")
 	}
 	if _, err = prepared_statment.Exec(); err != nil {

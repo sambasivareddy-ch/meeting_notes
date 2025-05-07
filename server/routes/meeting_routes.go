@@ -2,7 +2,6 @@ package routes
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -40,7 +39,6 @@ func GetUserMeetingsRoute(ctx *gin.Context) {
 
 	meetingList, err := models.GetMeetingsList(sessionInfo.UserId)
 	if err != nil {
-		fmt.Println(err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to insert into meetings table",
 		})

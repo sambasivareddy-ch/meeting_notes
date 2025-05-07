@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/sambasivareddy-ch/meeting_notes_app/server/database"
 )
 
@@ -18,8 +16,6 @@ type UserInfo struct {
 
 func (user UserInfo) SaveUser(accessToken string) error {
 	insertCommand := `INSERT INTO USERS VALUES ($1, $2, $3, $4)`
-
-	fmt.Println(insertCommand)
 
 	preparedStatement, err := database.AppDatabase.Prepare(insertCommand)
 	if err != nil {
@@ -53,7 +49,6 @@ func PrintUsersInfo() {
 	for rows.Next() {
 		var user UserInfo
 		rows.Scan(&user.Id, &user.Name, &user.Email)
-		fmt.Println(user.Id, user.Name, user.Email)
 	}
 }
 
