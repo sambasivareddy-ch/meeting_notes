@@ -24,8 +24,7 @@ var AppDatabase *sql.DB
 func InitDB() error {
 	var err error
 
-	// dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	dsn := "postgresql://samba_user:" + os.Getenv("PostgresPassword") + "@dpg-cvu6u9vgi27c73af0nl0-a.oregon-postgres.render.com/samba"
+	dsn := "postgresql://postgres:" + os.Getenv("PGPASSWORD") + "@caboose.proxy.rlwy.net:48713/railway"
 	AppDatabase, err = sql.Open("postgres", dsn)
 
 	if err != nil {

@@ -15,8 +15,8 @@ type UserSessionInfo struct {
 var RedisContext = context.Background()
 
 var RedisClient = redis.NewClient(&redis.Options{
-	Addr:     os.Getenv("REDIS_LISTENING_ADDR"),
+	Addr:     os.Getenv("REDISHOST"),
 	Username: "default",
-	Password: os.Getenv("REDIS_PASSWORD"),
+	Password: os.Getenv("REDISPASSWORD"),
 	DB:       0,
 })
