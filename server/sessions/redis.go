@@ -2,6 +2,7 @@ package sessions
 
 import (
 	"context"
+	"log"
 	"os"
 
 	"github.com/redis/go-redis/v9"
@@ -12,11 +13,18 @@ type UserSessionInfo struct {
 	AccessToken string `json:"accesstoken"`
 }
 
-var RedisContext = context.Background()
+var (
+	RedisContext = context.Background()
+	RedisClient  *redis.Client
+)
 
-var RedisClient = redis.NewClient(&redis.Options{
-	Addr:     os.Getenv("REDISHOST"),
-	Username: "default",
-	Password: os.Getenv("REDISPASSWORD"),
-	DB:       0,
-})
+func init() {
+	redisURL := os.Getenv("REDIS_URL")
+
+	opt, err := redis.ParseURL(redisURL)
+	if err != nil {
+		log.Fatalf("Failed to parse Redis URL: %v", err)
+	}
+
+	RedisClient = redis.NewClient(opt)
+}

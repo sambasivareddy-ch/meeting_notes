@@ -20,7 +20,7 @@ function App() {
     useEffect(() => {
         const getAndSetLoginStatus = async () => {
             try {
-                const response = await fetch(`https://meeting-notes-7izd.onrender.com/loginstatus`, {
+                const response = await fetch(`https://meeting-notes-main-production.up.railway.app/loginstatus`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
